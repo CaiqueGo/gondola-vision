@@ -1,0 +1,99 @@
+versao_schema: 1
+categoria: bebidas-nao-alcoolicas
+skus:
+- id: coca-trad-350-lata
+  nome: Coca-Cola Lata 350ml
+  marca: Coca-Cola
+  linha: Original
+  variante: tradicional
+  tamanho: 350.0
+  unidade: ml
+  embalagem: lata
+  packshots:
+  - arquivo: coca-trad-350-lata.png
+    sha256: 6382137486014ff008edd80bc4b57e7337eebe3c6bc5b5a064aba098191bc3b2
+    bytes: 4192
+    largura: 512
+    altura: 512
+    selado_em: '2026-09-21T14:54:43.501847Z'
+  registrado_em: '2026-09-21T14:54:43.455783Z'
+- id: coca-trad-600-pet
+  nome: Coca-Cola PET 600ml
+  marca: Coca-Cola
+  linha: Original
+  variante: tradicional
+  tamanho: 600.0
+  unidade: ml
+  embalagem: pet
+  packshots:
+  - arquivo: coca-trad-600-pet.png
+    sha256: 155be8909f37fc428e2c876e364fc53b2fffdd3c066180eca4fd824230a0726d
+    bytes: 4068
+    largura: 512
+    altura: 512
+    selado_em: '2026-09-21T14:54:43.501847Z'
+  registrado_em: '2026-09-21T14:54:43.475462Z'
+- id: coca-zero-350-lata
+  nome: Coca-Cola Zero Lata 350ml
+  marca: Coca-Cola
+  linha: Original
+  variante: zero
+  tamanho: 350.0
+  unidade: ml
+  embalagem: lata
+  packshots:
+  - arquivo: coca-zero-350-lata.png
+    sha256: 24690d72c844d6f86d2274c1a00f4f088f9bf86d2f86c5c47b92fc32fb0659bc
+    bytes: 4090
+    largura: 512
+    altura: 512
+    selado_em: '2026-09-21T14:54:43.501847Z'
+  registrado_em: '2026-09-21T14:54:43.465459Z'
+- id: coca-zero-600-pet
+  nome: Coca-Cola Zero PET 600ml
+  marca: Coca-Cola
+  linha: Original
+  variante: zero
+  tamanho: 600.0
+  unidade: ml
+  embalagem: pet
+  packshots:
+  - arquivo: coca-zero-600-pet.png
+    sha256: b827a7c38a32aea0b163a24d5066392d48f0bc25af747d21058399b42d253e45
+    bytes: 3892
+    largura: 512
+    altura: 512
+    selado_em: '2026-09-21T14:54:43.501847Z'
+  registrado_em: '2026-09-21T14:54:43.483988Z'
+- id: guarana-trad-350-lata
+  nome: Guarana Antarctica Lata 350ml
+  marca: Antarctica
+  linha: Guarana
+  variante: tradicional
+  tamanho: 350.0
+  unidade: ml
+  embalagem: lata
+  packshots:
+  - arquivo: guarana-trad-350-lata.png
+    sha256: 1fa8cde4c073890cc2bebfe0e7bc0d212b9400ecfe750cc0bd66132162c786f1
+    bytes: 4031
+    largura: 512
+    altura: 512
+    selado_em: '2026-09-21T14:54:43.501847Z'
+  registrado_em: '2026-09-21T14:54:43.492505Z'
+- id: guarana-zero-350-lata
+  nome: Guarana Antarctica Zero Lata 350ml
+  marca: Antarctica
+  linha: Guarana
+  variante: zero
+  tamanho: 350.0
+  unidade: ml
+  embalagem: lata
+  packshots:
+  - arquivo: guarana-zero-350-lata.png
+    sha256: 5504821beada62ec699aa1e155dec655a0595c661ed521a8445ac746c8dfcaf1
+    bytes: 3895
+    largura: 512
+    altura: 512
+    selado_em: '2026-09-21T14:54:43.501847Z'
+  registrado_em: '2026-09-21T14:54:43.501847Z'

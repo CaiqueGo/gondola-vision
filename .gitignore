@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# As imagens nao vao para o git: sao pesadas e o manifesto ja carrega o hash
+# de cada uma, que e o que da rastreabilidade.
+data/packshots/
+exemplo/packshots/
+
