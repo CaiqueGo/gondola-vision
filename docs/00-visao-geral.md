@@ -34,19 +34,18 @@ Disso decorre a pergunta que organiza o projeto todo:
 
 **Uma categoria, uma rede, um conjunto fechado de fotos de teste.**
 
-A recomendação é começar por **bebidas não-alcoólicas**: é a categoria com a
-maior densidade de pares confundíveis (Zero vs tradicional, 350 vs 600, sabores
-da mesma linha), que é exatamente o que você precisa estressar. Se funcionar
-ali, funciona em mercearia. O caminho inverso não vale.
+A categoria é **bebidas não-alcoólicas**: é a de maior densidade de pares
+confundíveis (Zero vs tradicional, 350 vs 600, sabores da mesma linha), que é
+exatamente o que você precisa estressar. Se funcionar ali, funciona em
+mercearia. O caminho inverso não vale.
 
 Alvo inicial: **100 a 300 SKUs**, com packshot e cadastro de marca/linha/
 variante/tamanho. Grande o bastante para a cauda longa aparecer, pequeno o
 bastante para você rotular o conjunto de teste sozinho.
 
-> **Decisão em aberto.** A categoria acima é proposta minha, pela lógica de
-> confundibilidade. Se o caso de uso real for outro (higiene, mercearia seca,
-> perfumaria), troque aqui antes da Parte 1 — o recorte define o catálogo e o
-> conjunto de teste, e refazer depois custa caro.
+> **Decidido em 08/10/2026.** O recorte define o catálogo e o conjunto de teste,
+> e refazer depois custa caro — trocar de categoria agora significa recadastrar
+> o catálogo e refotografar o conjunto da Parte 3.
 
 ## A arquitetura
 

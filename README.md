@@ -17,7 +17,7 @@ de vetores que aceita produto novo com um `insert`.
 1. [`docs/00-visao-geral.md`](docs/00-visao-geral.md) — o problema, a
    arquitetura e a razão de cada peça
 2. [`docs/glossario.md`](docs/glossario.md) — cada termo técnico em uma linha
-3. [`docs/partes/01-catalogo.md`](docs/partes/01-catalogo.md) — a parte pronta
+3. [`docs/partes/`](docs/partes/) — uma página por parte construída
 4. [`docs/diario.md`](docs/diario.md) — o que deu errado, anotado na hora
 
 ## Estado atual
@@ -26,11 +26,11 @@ de vetores que aceita produto novo com um `insert`.
 |---|---|
 | 0 — Documentação | ✅ pronto |
 | 1 — Catálogo versionado | ✅ pronto |
-| 2 a 14 | ⬜ a construir |
+| 2 — Detecção e crops | 🟡 código e testes prontos; falta rodar com pesos SKU-110K numa foto real |
+| 3 a 14 | ⬜ a construir |
 
-**Decisão em aberto antes da Parte 1:** a categoria do recorte. A proposta é
-bebidas não-alcoólicas, pela densidade de pares confundíveis — ver
-[`00-visao-geral.md`](docs/00-visao-geral.md#o-recorte).
+**Recorte decidido (08/10/2026):** bebidas não-alcoólicas, pela densidade de
+pares confundíveis — ver [`00-visao-geral.md`](docs/00-visao-geral.md#o-recorte).
 
 ## As etapas
 
@@ -42,7 +42,7 @@ então seguimos. Nenhuma parte depende de código que ainda não existe.
 | # | Parte | Status | Entrega testável |
 |---|---|---|---|
 | 1 | [Catálogo versionado](docs/partes/01-catalogo.md) | ✅ | `gondola catalogo verificar` confere hash e cadastro de cada SKU |
-| 2 | Detecção e crops | ⬜ | `gondola detectar foto.jpg` salva um crop por facing |
+| 2 | [Detecção e crops](docs/partes/02-deteccao.md) | 🟡 | `gondola detectar foto.jpg` salva um crop por facing |
 | 3 | Conjunto de teste rotulado | ⬜ | `gondola dataset validar` sobre 300–500 crops reais seus |
 | 4 | Galeria de referência | ⬜ | `gondola indexar --encoder dinov2` popula o índice |
 | 5 | Busca e avaliação | ⬜ | `gondola avaliar` imprime top-1 e top-5 |

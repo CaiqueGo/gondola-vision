@@ -13,6 +13,7 @@ from typing import Annotated
 
 import typer
 from rich.console import Console
+from rich.markup import escape
 from rich.table import Table
 
 from gondola import __version__, config
@@ -25,6 +26,12 @@ from gondola.catalogo.manifesto import (
 )
 from gondola.catalogo.modelos import Embalagem, Unidade
 from gondola.catalogo.verificacao import Nivel, verificar
+from gondola.deteccao.detector import DetectorYolo, ErroDeteccao
+from gondola.deteccao.recorte import (
+    CONFIANCA_MINIMA_PADRAO,
+    LADO_MINIMO_PADRAO,
+    detectar_e_recortar,
+)
 
 app = typer.Typer(
     help="gondola — reconhecimento de produtos em gondola.",
@@ -233,6 +240,85 @@ def catalogo_verificar() -> None:
         console.print(f"[green]sem erros[/green], [yellow]{len(rel.avisos)} aviso(s)[/yellow]")
     else:
         console.print("[green]catalogo integro[/green]")
+
+
+@app.command()
+def detectar(
+    fotos: Annotated[list[Path], typer.Argument(help="Uma ou mais fotos de gondola.")],
+    pesos: Annotated[
+        Path | None,
+        typer.Option("--pesos", help="Pesos do YOLO. Padrao: GONDOLA_PESOS_DETECTOR."),
+    ] = None,
+    confianca: Annotated[
+        float,
+        typer.Option("--confianca", min=0.0, max=1.0, help="Caixas abaixo disso sao descartadas."),
+    ] = CONFIANCA_MINIMA_PADRAO,
+    lado_minimo: Annotated[
+        int, typer.Option("--lado-minimo", min=1, help="Menor lado aceito de um crop, em px.")
+    ] = LADO_MINIMO_PADRAO,
+    tamanho_entrada: Annotated[
+        int, typer.Option("--imgsz", min=32, help="Lado da imagem que entra no YOLO.")
+    ] = 640,
+    saida: Annotated[
+        Path | None, typer.Option("--saida", help="Diretorio dos crops. Padrao: data/crops.")
+    ] = None,
+    substituir: Annotated[
+        bool, typer.Option("--substituir", help="Refazer foto ja detectada.")
+    ] = False,
+) -> None:
+    """Parte 2 — detecta os produtos e salva um crop por facing.
+
+    Cada foto vira um diretorio com os crops, a anotada.jpg (para conferir com os
+    olhos) e o deteccao.json. Sai com codigo 1 se alguma foto falhar.
+    """
+    # O diretorio de saida e o nome da foto sem extensao: duas fotos homonimas de
+    # pastas diferentes cairiam no mesmo lugar, e com --substituir a segunda
+    # apagaria a primeira em silencio.
+    repetidos = sorted({f.stem for f in fotos if [g.stem for g in fotos].count(f.stem) > 1})
+    if repetidos:
+        erro_console.print(
+            f"[red]erro:[/red] fotos com o mesmo nome: {escape(', '.join(repetidos))} "
+            "(cada foto vira data/crops/<nome>; renomeie antes)"
+        )
+        raise typer.Exit(code=1)
+
+    try:
+        detector = DetectorYolo(
+            pesos or config.caminho_pesos_detector(), tamanho_entrada=tamanho_entrada
+        )
+    except ErroDeteccao as erro:
+        erro_console.print(f"[red]erro:[/red] {escape(str(erro))}")
+        raise typer.Exit(code=1) from erro
+
+    dir_saida = saida or config.dir_crops()
+    falhas = 0
+    for foto in fotos:
+        try:
+            m = detectar_e_recortar(
+                foto,
+                detector,
+                dir_saida,
+                confianca_minima=confianca,
+                lado_minimo=lado_minimo,
+                substituir=substituir,
+            )
+        except ErroDeteccao as erro:
+            erro_console.print(f"[red]erro:[/red] {escape(str(erro))}")
+            falhas += 1
+            continue
+        console.print(
+            f"[green]{len(m.crops):>4} crops[/green]  {m.fileiras} fileira(s)  "
+            + escape(f"{foto.name}  -> {dir_saida / foto.stem}")
+        )
+        console.print(
+            f"        descartadas: {m.descartadas_confianca} por confianca, "
+            f"{m.descartadas_pequenas} pequenas, {m.descartadas_fora} fora da foto"
+            + ("  [yellow](girada pelo EXIF)[/yellow]" if m.girada_pelo_exif else "")
+        )
+
+    if falhas:
+        erro_console.print(f"\n[red]{falhas} foto(s) falharam[/red]")
+        raise typer.Exit(code=1)
 
 
 if __name__ == "__main__":

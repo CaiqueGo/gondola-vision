@@ -12,9 +12,12 @@ from pathlib import Path
 
 VAR_DIR_DADOS = "GONDOLA_DATA_DIR"
 PADRAO_DIR_DADOS = "data"
+VAR_PESOS_DETECTOR = "GONDOLA_PESOS_DETECTOR"
 
 NOME_MANIFESTO = "catalogo.yaml"
 NOME_DIR_PACKSHOTS = "packshots"
+NOME_DIR_CROPS = "crops"
+NOME_PESOS_DETECTOR = "modelos/detector.pt"
 
 
 def dir_dados() -> Path:
@@ -31,3 +34,13 @@ def dir_packshots() -> Path:
     """Onde ficam as imagens de referencia. Nao vai para o git."""
     return dir_dados() / NOME_DIR_PACKSHOTS
 
+
+def dir_crops() -> Path:
+    """Onde a Parte 2 grava os crops, um subdiretorio por foto. Nao vai para o git."""
+    return dir_dados() / NOME_DIR_CROPS
+
+
+def caminho_pesos_detector() -> Path:
+    """Pesos do YOLO. Respeita GONDOLA_PESOS_DETECTOR quando definida. Nao vai para o git."""
+    definido = os.environ.get(VAR_PESOS_DETECTOR)
+    return Path(definido) if definido else dir_dados() / NOME_PESOS_DETECTOR

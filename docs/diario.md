@@ -33,6 +33,25 @@ Formato: data, parte, o que aconteceu, o que você fez.
 
 ---
 
+## 2026-10-08 — Parte 2
+
+- Recorte decidido: bebidas não-alcoólicas.
+- Código da detecção pronto com 19 testes novos (46 no total), ruff e mypy
+  limpos. Tudo testado com um detector falso; o ultralytics ainda não foi
+  instalado nem rodado.
+- O teste da mensagem "ultralytics não instalado" pegou um bug de verdade: o
+  Rich leu `[dev,deteccao]` como tag de markup e engoliu o texto, e a mensagem
+  dizia para instalar `"."`. Texto que vem de fora (erro, caminho) agora passa
+  por `rich.markup.escape` no comando `detectar`. Os comandos da Parte 1 têm o
+  mesmo risco com caminho que contenha colchete.
+- Decisão: o corte de confiança fica fora do YOLO (que roda com piso de 0,05),
+  para o manifesto contar quantas caixas o limiar descartou.
+- Pendente: pesos do SKU-110K. O ultralytics não publica pesos oficiais; ou
+  treina, ou usa de terceiro (é pickle, só de origem confiável).
+- (anote aqui o que a `anotada.jpg` da primeira foto real mostrar)
+
+---
+
 ## Modelo de entrada
 
 ```

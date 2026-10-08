@@ -47,3 +47,7 @@ python_version = "3.11"
 strict = true
 files = ["src"]
 
+[[tool.mypy.overrides]]
+# Sem stubs de tipo, e so importado dentro do adaptador DetectorYolo.
+module = ["ultralytics", "ultralytics.*"]
+ignore_missing_imports = true

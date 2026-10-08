@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 from collections.abc import Callable
 from pathlib import Path
 
@@ -78,3 +79,44 @@ def test_adicionar_id_repetido_sai_com_erro(fazer_packshot: Callable[..., Path])
     resultado = _adicionar(packshot, id_sku="z3", variante="zero", tamanho="350")
     assert resultado.exit_code == 1
 
+
+def test_detectar_sem_pesos_sai_com_erro_explicando_onde_procurar(
+    dados_tmp: Path, tmp_path: Path
+) -> None:
+    foto = tmp_path / "gondola.jpg"
+    foto.write_bytes(b"irrelevante: falha antes de abrir a foto")
+
+    resultado = runner.invoke(app, ["detectar", str(foto)])
+
+    assert resultado.exit_code == 1
+    assert "pesos do detector nao encontrados" in resultado.stderr
+    assert not (dados_tmp / "crops").exists()
+
+
+def test_detectar_sem_ultralytics_instalado_diz_como_instalar(
+    dados_tmp: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    pesos = tmp_path / "detector.pt"
+    pesos.write_bytes(b"pesos de mentira")
+    # None em sys.modules faz o proximo 'import ultralytics' falhar com ImportError,
+    # esteja ele instalado ou nao.
+    monkeypatch.setitem(sys.modules, "ultralytics", None)
+
+    resultado = runner.invoke(app, ["detectar", str(tmp_path / "x.jpg"), "--pesos", str(pesos)])
+
+    assert resultado.exit_code == 1
+    assert "deteccao" in resultado.stderr
+
+
+@pytest.mark.usefixtures("dados_tmp")
+def test_detectar_recusa_duas_fotos_com_o_mesmo_nome(tmp_path: Path) -> None:
+    (tmp_path / "a").mkdir()
+    (tmp_path / "b").mkdir()
+
+    resultado = runner.invoke(
+        app, ["detectar", str(tmp_path / "a" / "IMG_1.jpg"), str(tmp_path / "b" / "IMG_1.jpg")]
+    )
+
+    assert resultado.exit_code == 1
+    assert "mesmo nome" in resultado.stderr
+    assert "IMG_1" in resultado.stderr

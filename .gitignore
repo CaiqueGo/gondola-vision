@@ -13,3 +13,8 @@ htmlcov/
 data/packshots/
 exemplo/packshots/
 
+# Saida da Parte 2 e pesos de modelo: gerados ou baixados, nunca versionados.
+# O manifesto de cada foto (deteccao.json) carrega o hash da foto e dos pesos.
+data/crops/
+data/modelos/
+*.pt
