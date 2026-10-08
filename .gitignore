@@ -17,4 +17,7 @@ exemplo/packshots/
 # O manifesto de cada foto (deteccao.json) carrega o hash da foto e dos pesos.
 data/crops/
 data/modelos/
+data/datasets/
+data/treino/
+runs/
 *.pt

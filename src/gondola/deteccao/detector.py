@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Protocol
+from typing import Any, Protocol
 
 from PIL import Image
 
@@ -87,7 +87,7 @@ class DetectorYolo:
                 "(veja docs/partes/02-deteccao.md, secao 'Os pesos')"
             )
         try:
-            from ultralytics import YOLO
+            from ultralytics.models.yolo.model import YOLO
         except ImportError as erro:
             raise ErroDeteccao(
                 "ultralytics nao esta instalado; rode: uv pip install -e \".[dev,deteccao]\""
@@ -96,7 +96,10 @@ class DetectorYolo:
         self._pesos_sha256 = sha256_arquivo(pesos)
         self._descricao = f"yolo:{pesos.name}"
         self._tamanho_entrada = tamanho_entrada
-        self._modelo = YOLO(str(pesos))
+        # Any de proposito: os tipos publicos do ultralytics declaram o retorno de
+        # predict como lista, iterador ou tensor. Esta classe e a fronteira; o que
+        # sai dela e Caixa, tipada.
+        self._modelo: Any = YOLO(str(pesos))
 
     @property
     def descricao(self) -> str:

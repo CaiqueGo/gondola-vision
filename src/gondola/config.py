@@ -13,11 +13,13 @@ from pathlib import Path
 VAR_DIR_DADOS = "GONDOLA_DATA_DIR"
 PADRAO_DIR_DADOS = "data"
 VAR_PESOS_DETECTOR = "GONDOLA_PESOS_DETECTOR"
+VAR_DIR_DATASETS = "GONDOLA_DIR_DATASETS"
 
 NOME_MANIFESTO = "catalogo.yaml"
 NOME_DIR_PACKSHOTS = "packshots"
 NOME_DIR_CROPS = "crops"
 NOME_PESOS_DETECTOR = "modelos/detector.pt"
+NOME_DIR_DATASETS = "datasets"
 
 
 def dir_dados() -> Path:
@@ -44,3 +46,13 @@ def caminho_pesos_detector() -> Path:
     """Pesos do YOLO. Respeita GONDOLA_PESOS_DETECTOR quando definida. Nao vai para o git."""
     definido = os.environ.get(VAR_PESOS_DETECTOR)
     return Path(definido) if definido else dir_dados() / NOME_PESOS_DETECTOR
+
+
+def dir_datasets() -> Path:
+    """Datasets publicos de treino (SKU-110K). Respeita GONDOLA_DIR_DATASETS.
+
+    Fica fora de ``dir_dados()`` quando definida porque um dataset destes passa de
+    20 GB e pode precisar morar em outro disco.
+    """
+    definido = os.environ.get(VAR_DIR_DATASETS)
+    return Path(definido) if definido else dir_dados() / NOME_DIR_DATASETS

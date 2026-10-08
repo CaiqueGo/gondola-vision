@@ -26,7 +26,7 @@ de vetores que aceita produto novo com um `insert`.
 |---|---|
 | 0 — Documentação | ✅ pronto |
 | 1 — Catálogo versionado | ✅ pronto |
-| 2 — Detecção e crops | 🟡 código e testes prontos; falta rodar com pesos SKU-110K numa foto real |
+| 2 — Detecção e crops | 🟡 detector treinado (mAP50-95 0,576 no SKU-110K); falta rodar numa foto sua |
 | 3 a 14 | ⬜ a construir |
 
 **Recorte decidido (08/10/2026):** bebidas não-alcoólicas, pela densidade de
